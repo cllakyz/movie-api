@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: [true, '{PATH} alanı zorunludur.'],
-        unique: [true, '{PATH} daha önce kullanılmış, Lütfen farklı bir {PATH} giriniz.']
+        unique: true,
     },
     password: {
         type: String,
