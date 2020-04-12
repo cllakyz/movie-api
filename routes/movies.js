@@ -21,8 +21,13 @@ router.get('/', (req, res) => {
                 path: '$director',
                 preserveNullAndEmptyArrays: true,
             }
+        },
+        {
+            $sort: {
+                created_at: 1
+            }
         }
-    ]).sort({ created_at: 1});
+    ]);
 
     list.then((data) => {
         res.json({

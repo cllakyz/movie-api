@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
                     fullname: '$fullname',
                     born: '$born',
                     bio: '$bio',
+                    created_at: '$created_at'
                 },
                 movies: {
                     $push: '$movies'
@@ -41,7 +42,13 @@ router.get('/', (req, res) => {
                 fullname: '$_id.fullname',
                 born: '$_id.born',
                 bio: '$_id.bio',
+                created_at: '$_id.created_at',
                 movies: '$movies',
+            }
+        },
+        {
+            $sort: {
+                created_at: 1
             }
         }
     ]);
