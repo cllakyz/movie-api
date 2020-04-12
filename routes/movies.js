@@ -6,7 +6,23 @@ const Movie = require('../models/Movie');
 
 /* GET Movie list*/
 router.get('/', (req, res) => {
-    const list = Movie.find({});
+    //const list = Movie.find({});
+    const list = Movie.aggregate([
+        {
+            $lookup: {
+                from: 'directors',
+                localField: 'director_id',
+                foreignField: '_id',
+                as: 'director'
+            }
+        },
+        {
+            $unwind: {
+                path: '$director',
+                preserveNullAndEmptyArrays: true,
+            }
+        }
+    ]);
 
     list.then((data) => {
         res.json({
