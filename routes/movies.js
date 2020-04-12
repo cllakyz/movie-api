@@ -4,6 +4,21 @@ const router = express.Router();
 // Models
 const Movie = require('../models/Movie');
 
+/* GET Movie list*/
+router.get('/', (req, res) => {
+    const list = Movie.find({});
+    list.then(data => {
+        res.json({
+            status: 200,
+            message: "Movie List",
+            data: data
+        });
+    }).catch(err => {
+        res.json(err);
+    });
+});
+
+/* POST Movie save */
 router.post('/', (req, res, next) => {
     const { title, imdb_score, category, country, year } = req.body;
     const movie = new Movie({
@@ -32,6 +47,21 @@ router.post('/', (req, res, next) => {
             data: data
         });
     }).catch((err) => {
+        res.json(err);
+    });
+});
+
+/* GET Movie detail */
+router.get('/:movie_id', (req, res) => {
+    const movie_id = req.params.movie_id;
+    const detail = Movie.findById(movie_id);
+    detail.then(data => {
+        res.json({
+            status: 200,
+            message: "Movie Detail",
+            data: data
+        });
+    }).catch(err => {
         res.json(err);
     });
 });
