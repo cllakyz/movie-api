@@ -125,4 +125,25 @@ router.delete('/:movie_id', (req, res, next) => {
     });
 });
 
+/* GET Movie between year list*/
+router.get('/between/:start_year/:end_year', (req, res) => {
+    const { start_year, end_year } = req.params;
+    const list = Movie.find({
+        year: {
+            "$gte": parseInt(start_year),
+            "$lte": parseInt(end_year)
+        }
+    }).sort({ year: 1 });
+
+    list.then((data) => {
+        res.json({
+            status: 200,
+            message: "Movie List",
+            data: data
+        });
+    }).catch((err) => {
+        res.json(err);
+    });
+});
+
 module.exports = router;
