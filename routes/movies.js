@@ -7,6 +7,7 @@ const Movie = require('../models/Movie');
 /* GET Movie list*/
 router.get('/', (req, res) => {
     const list = Movie.find({});
+
     list.then((data) => {
         res.json({
             status: 200,
@@ -40,6 +41,7 @@ router.post('/', (req, res, next) => {
     });*/
 
     const save = movie.save();
+
     save.then((data) => {
         res.json({
             status: 200,
@@ -55,6 +57,7 @@ router.post('/', (req, res, next) => {
 router.get('/:movie_id', (req, res, next) => {
     const movie_id = req.params.movie_id;
     const detail = Movie.findById(movie_id);
+
     detail.then((data) => {
         if (!data)
             return next({ message: 'The movie was not found' });
@@ -62,6 +65,25 @@ router.get('/:movie_id', (req, res, next) => {
         res.json({
             status: 200,
             message: "Movie Detail",
+            data: data
+        });
+    }).catch((err) => {
+        res.json(err);
+    });
+});
+
+/* PUT Movie detail update */
+router.put('/:movie_id', (req, res, next) => {
+    const movie_id = req.params.movie_id;
+    const update = Movie.findByIdAndUpdate(movie_id, req.body);
+
+    update.then((data) => {
+        if (!data)
+            return next({ message: 'The movie was not found' });
+
+        res.json({
+            status: 200,
+            message: "Movie Updated Successfully",
             data: data
         });
     }).catch((err) => {
