@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
                 preserveNullAndEmptyArrays: true,
             }
         }
-    ]);
+    ]).sort({ created_at: 1});
 
     list.then((data) => {
         res.json({
