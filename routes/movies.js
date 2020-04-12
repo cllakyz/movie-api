@@ -7,13 +7,13 @@ const Movie = require('../models/Movie');
 /* GET Movie list*/
 router.get('/', (req, res) => {
     const list = Movie.find({});
-    list.then(data => {
+    list.then((data) => {
         res.json({
             status: 200,
             message: "Movie List",
             data: data
         });
-    }).catch(err => {
+    }).catch((err) => {
         res.json(err);
     });
 });
@@ -52,16 +52,19 @@ router.post('/', (req, res, next) => {
 });
 
 /* GET Movie detail */
-router.get('/:movie_id', (req, res) => {
+router.get('/:movie_id', (req, res, next) => {
     const movie_id = req.params.movie_id;
     const detail = Movie.findById(movie_id);
-    detail.then(data => {
+    detail.then((data) => {
+        if (!data)
+            return next({ message: 'The movie was not found' });
+
         res.json({
             status: 200,
             message: "Movie Detail",
             data: data
         });
-    }).catch(err => {
+    }).catch((err) => {
         res.json(err);
     });
 });
