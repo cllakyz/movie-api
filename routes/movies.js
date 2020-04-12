@@ -19,6 +19,21 @@ router.get('/', (req, res) => {
     });
 });
 
+/* GET Movie top10 list*/
+router.get('/top10', (req, res) => {
+    const list = Movie.find({}).limit(10).sort({ imdb_score: -1 });
+
+    list.then((data) => {
+        res.json({
+            status: 200,
+            message: "Movie Top 10 List",
+            data: data
+        });
+    }).catch((err) => {
+        res.json(err);
+    });
+});
+
 /* POST Movie save */
 router.post('/', (req, res, next) => {
     const { title, imdb_score, category, country, year } = req.body;
