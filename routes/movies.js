@@ -75,6 +75,7 @@ router.get('/:movie_id', (req, res, next) => {
 /* PUT Movie detail update */
 router.put('/:movie_id', (req, res, next) => {
     const movie_id = req.params.movie_id;
+    req.body.updated_at = Date.now();
     const update = Movie.findByIdAndUpdate(movie_id, req.body, { new: true });
 
     update.then((data) => {
