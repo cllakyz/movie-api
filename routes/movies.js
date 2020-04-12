@@ -91,4 +91,22 @@ router.put('/:movie_id', (req, res, next) => {
     });
 });
 
+/* DELETE Movie delete */
+router.delete('/:movie_id', (req, res, next) => {
+    const movie_id = req.params.movie_id;
+    const remove = Movie.findByIdAndRemove(movie_id);
+
+    remove.then((data) => {
+        if (!data)
+            return next({ message: 'The movie was not found' });
+
+        res.json({
+            status: 200,
+            message: "Movie Deleted Successfully",
+        });
+    }).catch((err) => {
+        res.json(err);
+    });
+});
+
 module.exports = router;
