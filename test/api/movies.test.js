@@ -31,7 +31,7 @@ describe('/api/movies tests', () => {
                     res.body.data.should.be.a('array');
                     done();
                 });
-        }).timeout(10000);
+        });
     });
 
     describe('/POST movie', () => {
@@ -60,7 +60,7 @@ describe('/api/movies tests', () => {
                     movieId = res.body.data._id;
                     done();
                 });
-        }).timeout(10000);
+        });
     });
 
     describe('/GET/:movie_id movie', () => {
@@ -80,7 +80,7 @@ describe('/api/movies tests', () => {
                     res.body.data.should.have.property('_id').eql(movieId);
                     done();
                 });
-        }).timeout(10000);
+        });
     });
 
     describe('/PUT/:movie_id movie', () => {
@@ -108,7 +108,7 @@ describe('/api/movies tests', () => {
                     res.body.data.should.have.property('_id').eql(movieId);
                     done();
                 });
-        }).timeout(10000);
+        });
     });
 
     describe('/DELETE/:movie_id movie', () => {
@@ -122,6 +122,6 @@ describe('/api/movies tests', () => {
                     res.body.should.have.property('status').eql(200);
                     done();
                 });
-        }).timeout(10000);
+        });
     });
 });
