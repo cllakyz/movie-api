@@ -8,7 +8,8 @@ const User = require('../models/User');
 
 /* GET home */
 router.get('/', (req, res, next) => {
-    res.json({ title: 'Express Movie Api' });
+    //res.json({ title: 'Express Movie Api' });
+    res.render('index', { title: 'Express Movie Api' });
 });
 
 /* POST register */
