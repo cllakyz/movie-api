@@ -17,9 +17,7 @@ describe('/api/directors tests', () => {
             })
             .end((err, res) => {
                 token = res.body.token;
-                setTimeout(() => {
-                    done();
-                }, 300);
+                done();
             });
     });
 
