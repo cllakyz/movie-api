@@ -64,7 +64,7 @@ describe('/api/directors tests', () => {
                 .set('x-access-token', token)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.data.should.be.a('array');
+                    res.body.data.should.be.a('object');
                     res.body.data.should.have.property('fullname');
                     res.body.data.should.have.property('born');
                     res.body.data.should.have.property('bio');

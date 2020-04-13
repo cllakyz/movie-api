@@ -136,7 +136,7 @@ router.get('/:director_id', (req, res, next) => {
         res.json({
             status: 200,
             message: "Director Detail",
-            data: data
+            data: data[0]
         });
     }).catch((err) => {
         res.json(err);
