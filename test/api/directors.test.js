@@ -31,7 +31,7 @@ describe('/api/directors tests', () => {
                     res.body.data.should.be.a('array');
                     done();
                 });
-        });
+        }).timeout(10000);
     });
 
     describe('/POST director', () => {
@@ -54,7 +54,7 @@ describe('/api/directors tests', () => {
                     directorId = res.body.data._id;
                     done();
                 });
-        });
+        }).timeout(10000);
     });
 
     describe('/GET/:director_id director', () => {
@@ -72,7 +72,7 @@ describe('/api/directors tests', () => {
                     res.body.data.should.have.property('_id').eql(directorId);
                     done();
                 });
-        });
+        }).timeout(10000);
     });
 
     describe('/PUT/:director_id director', () => {
@@ -108,6 +108,6 @@ describe('/api/directors tests', () => {
                     res.body.should.have.property('status').eql(200);
                     done();
                 });
-        });
+        }).timeout(10000);
     });
 });
