@@ -5,7 +5,7 @@ const router = express.Router();
 const Movie = require('../models/Movie');
 
 /* GET Movie list*/
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     //const list = Movie.find({});
     const list = Movie.aggregate([
         {
@@ -30,6 +30,9 @@ router.get('/', (req, res) => {
     ]);
 
     list.then((data) => {
+        if (!data || data.length === 0)
+            return next({ message: 'Movies was not found', status: 404 });
+
         res.json({
             status: 200,
             message: "Movie List",
@@ -41,13 +44,16 @@ router.get('/', (req, res) => {
 });
 
 /* GET Movie top10 list*/
-router.get('/top10', (req, res) => {
+router.get('/top10', (req, res, next) => {
     const list = Movie.find({}).limit(10).sort({ imdb_score: -1 });
 
     list.then((data) => {
+        if (!data || data.length === 0)
+            return next({ message: 'Top 10 Movies was not found', status: 404 });
+
         res.json({
             status: 200,
-            message: "Movie Top 10 List",
+            message: "Movies Top 10 List",
             data: data
         });
     }).catch((err) => {
@@ -97,7 +103,7 @@ router.get('/:movie_id', (req, res, next) => {
 
     detail.then((data) => {
         if (!data)
-            return next({ message: 'The movie was not found' });
+            return next({ message: 'The movie was not found', status: 404 });
 
         res.json({
             status: 200,
@@ -117,7 +123,7 @@ router.put('/:movie_id', (req, res, next) => {
 
     update.then((data) => {
         if (!data)
-            return next({ message: 'The movie was not found' });
+            return next({ message: 'The movie was not found', status: 404 });
 
         res.json({
             status: 200,
@@ -136,7 +142,7 @@ router.delete('/:movie_id', (req, res, next) => {
 
     remove.then((data) => {
         if (!data)
-            return next({ message: 'The movie was not found' });
+            return next({ message: 'The movie was not found', status: 404 });
 
         res.json({
             status: 200,
@@ -148,7 +154,7 @@ router.delete('/:movie_id', (req, res, next) => {
 });
 
 /* GET Movie between year list*/
-router.get('/between/:start_year/:end_year', (req, res) => {
+router.get('/between/:start_year/:end_year', (req, res, next) => {
     const { start_year, end_year } = req.params;
     const list = Movie.find({
         year: {
@@ -158,6 +164,9 @@ router.get('/between/:start_year/:end_year', (req, res) => {
     }).sort({ year: 1 });
 
     list.then((data) => {
+        if (!data || data.length === 0)
+            return next({ message: 'Movies was not found', status: 404 });
+
         res.json({
             status: 200,
             message: "Movie List",

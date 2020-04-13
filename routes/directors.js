@@ -6,7 +6,7 @@ const router = express.Router();
 const Director = require('../models/Director');
 
 /* GET Director list*/
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     const list = Director.aggregate([
         {
             $lookup: {
@@ -54,6 +54,9 @@ router.get('/', (req, res) => {
     ]);
 
     list.then((data) => {
+        if (!data || data.length === 0)
+            return next({ message: 'Directors was not found', status: 404 });
+
         res.json({
             status: 200,
             message: "Director List",
@@ -127,8 +130,8 @@ router.get('/:director_id', (req, res, next) => {
     ]);
 
     detail.then((data) => {
-        if (!data)
-            return next({ message: 'The director was not found' });
+        if (!data || data.length === 0)
+            return next({ message: 'The director was not found', status: 404 });
 
         res.json({
             status: 200,
@@ -147,7 +150,7 @@ router.put('/:director_id', (req, res, next) => {
 
     update.then((data) => {
         if (!data)
-            return next({ message: 'The director was not found' });
+            return next({ message: 'The director was not found', status: 404 });
 
         res.json({
             status: 200,
@@ -165,7 +168,7 @@ router.delete('/:director_id', (req, res, next) => {
 
     remove.then((data) => {
         if (!data)
-            return next({ message: 'The director was not found' });
+            return next({ message: 'The director was not found', status: 404 });
 
         res.json({
             status: 200,
